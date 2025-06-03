@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import TextField from "@mui/material/TextField";
+import BubbleText from "../../components/ui/bubbleText/BubbleText";
+import { Button } from "../../components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,45 +43,51 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    if (user.email.length && user.password.length) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
+    setButtonDisabled(!(user.email && user.password));
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading ? "Logging in..." : "Login"}</h1>
-      <hr />
-      <label htmlFor="email">Email</label>
-      <input
-        className="border border-gray-300 rounded p-2 mb-4"
-        type="email"
-        id="email"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-        placeholder="Enter your email"
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        value={user.password}
-        onChange={(e) => setUser({ ...user, password: e.target.value })}
-        placeholder="Enter your password"
-        className="border border-gray-300 rounded p-2 mb-4"
-      />
-      <button
-        onClick={onLogin}
-        disabled={buttonDisabled}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-      >
-        Login
-      </button>
-      <Link href="/signup" className="text-blue-500 hover:underline">
-        Don&apos;t have an account? Signup
-      </Link>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex flex-col items-center border border-gray-300 rounded-xl p-8 shadow-lg bg-white space-y-4">
+        <BubbleText>{loading ? "Logging in..." : "Login"}</BubbleText>
+        <hr className="w-full" />
+
+        <label className="font-semibold w-full" htmlFor="email">
+          Email
+        </label>
+        <TextField
+          className="w-full border border-gray-300 rounded p-2 mb-4"
+          type="email"
+          id="email"
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          placeholder="Enter your email"
+        />
+
+        <label className="font-semibold w-full" htmlFor="password">
+          Password
+        </label>
+        <TextField
+          className="w-full border border-gray-300 rounded p-2 "
+          type="password"
+          id="password"
+          value={user.password}
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          placeholder="Enter your password"
+        />
+
+        <Button
+          onClick={onLogin}
+          className="w-full p-2 border-gray-900 rounded-lg focus:outline-none focus:border-gray-600 mt-4"
+          disabled={buttonDisabled}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </Button>
+
+        <Link href="/signup" className="text-blue-500 hover:underline">
+          Don&apos;t have an account? Signup
+        </Link>
+      </div>
     </div>
   );
 }

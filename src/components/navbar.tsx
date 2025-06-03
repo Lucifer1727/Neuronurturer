@@ -4,8 +4,10 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+// import { useRouter } from "next/navigation";
 
 function Navbar() {
+  // const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [cursorPos, setCursorPos] = useState({
     left: 0,
@@ -22,7 +24,7 @@ function Navbar() {
     { name: "Skills We Develop", href: "#services" },
     { name: "Who We Help", href: "#portfolio" },
     { name: "Clinical Advice", href: "#contact" },
-    { name: "Login", href: "#login", isButton: true },
+    { name: "Login", href: "login", isButton: true },
   ];
 
   const handleMouseLeave = () => {
@@ -96,6 +98,7 @@ function Navbar() {
             key={index}
             href={link.href}
             className={buttonVariants({ variant: "outline" })}
+            // onClick={() => router.push("/login")}
           >
             {link.name}
           </Link>

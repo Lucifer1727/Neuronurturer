@@ -10,11 +10,13 @@ export function middleware(request: NextRequest) {
 
   if (isPublicPath && token) {
     // If the user is authenticated and tries to access a public path, redirect them to profile
+    console.log("User is authenticated, redirecting to profile");
     return NextResponse.redirect(new URL("/profile", request.nextUrl));
   }
 
   if (!isPublicPath && !token) {
     // If the user is not authenticated and tries to access a protected path, redirect them to login
+    console.log("User is not authenticated, redirecting to login");
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 
