@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
+// import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -11,6 +11,7 @@ export default function ProfilePage() {
       await axios.get("/api/users/logout");
       toast.success("Logout successful");
       router.push("/login");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log("Logout error:", error.message);
       toast.error(error.message || "Logout failed");
